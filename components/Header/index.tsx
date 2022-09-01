@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BellIcon, SearchIcon } from "@heroicons/react/solid";
 import Link from "next/link";
+import useAuth from "../../hooks/useAuth";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
