@@ -10,7 +10,7 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import ReactPlayer from "react-player/lazy";
-import { Genre } from "../../typings";
+import { Element, Genre, Movie } from "../../typings";
 import { FaPlay } from "react-icons/fa";
 
 const Modal = () => {
@@ -50,6 +50,7 @@ const Modal = () => {
 
   const handleClose = () => {
     setShowModal(false);
+    setMovie(null)
   };
 
   return (
