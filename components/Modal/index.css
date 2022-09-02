@@ -1,0 +1,61 @@
+/* Here we are using tailwind css  */
+
+@tailwind components;
+
+@layer components {
+  .Modal {
+    @apply fixed !top-7 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide;
+  }
+
+  .Modal__Button {
+    @apply flex h-11 w-11 items-center justify-center rounded-full border-2 border-[gray] bg-[#2a2a2a]/60 transition hover:border-white hover:bg-white/10;
+  }
+
+  .Modal__Button__Close {
+    @apply absolute right-5 top-5 !z-40 h-9 w-9 border-none bg-[#181818] hover:bg-[#181818];
+  }
+
+  .Modal__Player {
+    @apply relative pt-[56.25%];
+  }
+
+  .Modal__Player__Menu {
+    @apply absolute bottom-10 flex w-full items-center justify-between px-10;
+  }
+
+  .Modal__Player__Menu__Options {
+    @apply flex space-x-2;
+  }
+
+  .Modal__Player__Button__Play {
+    @apply flex items-center gap-x-2 rounded bg-white px-8 text-xl font-bold text-black transition hover:bg-[#e6e6e6];
+  }
+
+  .Modal__Movie {
+    @apply flex space-x-16 rounded-b-md bg-[#181818] px-10 py-8;
+  }
+
+  .Modal__Movie__Info {
+    @apply flex items-center space-x-2 text-sm;
+  }
+
+  .Modal__Movie__Info__Vote_Average {
+    @apply font-semibold text-green-400;
+  }
+
+  .Modal__Movie__Info__Type {
+    @apply flex h-4 items-center justify-center rounded border border-white/40 px-1.5 text-xs;
+  }
+
+  .Modal__Movie__About {
+    @apply flex flex-col gap-x-10 gap-y-4 font-light md:flex-row;
+  }
+
+  .Modal__Movie__About__Type {
+    @apply flex flex-col space-y-3 text-sm;
+  }
+
+  .Modal__Movie__About__Type__Color {
+    @apply text-[gray];
+  }
+}

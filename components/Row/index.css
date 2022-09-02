@@ -1,0 +1,29 @@
+/* Here we are using tailwind css  */
+
+@tailwind components;
+
+@layer components {
+  .Row {
+    @apply h-40 space-y-0.5 md:space-y-2;
+  }
+
+  .Row__Title {
+    @apply w-56 cursor-pointer text-sm font-semibold text-[#e5e5e5] transition duration-200 hover:text-white md:text-2xl;
+  }
+
+  .Row__Group {
+    @apply relative md:-ml-2;
+  }
+
+  .Row__Group__Data__Display {
+    @apply flex items-center space-x-0.5 overflow-x-scroll scrollbar-hide md:space-x-2.5 md:p-2;
+  }
+
+  .Row__Group__LeftIcon {
+    @apply absolute top-0 bottom-0 left-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100;
+  }
+
+  .Row__Group__RightIcon {
+    @apply absolute top-0 bottom-0 right-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100;
+  }
+}

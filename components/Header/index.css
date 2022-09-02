@@ -1,0 +1,21 @@
+/* Here we are using tailwind css  */
+
+@tailwind components;
+
+@layer components {
+  .Header__Menu {
+    @apply flex items-center space-x-2 md:space-x-10;
+  }
+
+  .Header__Menu__Link {
+    @apply cursor-pointer text-sm font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3];
+  }
+
+  .Header__Home__Link {
+    @apply cursor-default font-semibold text-white hover:text-white;
+  }
+
+  .Header__Menu__Options{
+    @apply flex items-center space-x-4 text-sm font-light
+  }
+}

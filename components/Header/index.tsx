@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const {logout} = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,11 +19,11 @@ const Header = () => {
     };
   }, []);
 
-  const header__background = `${isScrolled && "bg-[#141414]"}`;
+  const Header__Background = `${isScrolled && "bg-[#141414]"}`;
 
   return (
-    <header className={header__background}>
-      <div className="flex items-center space-x-2 md:space-x-10">
+    <header className={Header__Background}>
+      <div className="Header__Menu">
         <img
           src="https://rb.gy/ulxxee"
           width={100}
@@ -30,26 +31,27 @@ const Header = () => {
           className="cursor-pointer object-contain"
         />
         <ul className="hidden space-x-4 md:flex">
-          <li className="headerLink cursor-default font-semibold text-white hover:text-white">
+          <li className="Header__Menu__Link Header__Home__Link">
             Home
           </li>
-          <li className="headerLink">TV Shows</li>
-          <li className="headerLink">Movies</li>
-          <li className="headerLink">New & Popular</li>
-          <li className="headerLink">My List</li>
+          <li className="Header__Menu__Link">TV Shows</li>
+          <li className="Header__Menu__Link">Movies</li>
+          <li className="Header__Menu__Link">New & Popular</li>
+          <li className="Header__Menu__Link">My List</li>
         </ul>
       </div>
-      <div className="flex items-center space-x-4 text-sm font-light">
+      <div className="Header__Menu__Options">
         <SearchIcon className="hidden h-6 w-6 sm:inline" />
         <p className="hidden lg:inline">Kids</p>
         <BellIcon className="h-6 w-6 sm:inline" />
-        <Link href="/account">
+        {/* <Link href="/account"> */}
           <img
             src="https://rb.gy/g1pwyx"
             alt=""
             className="cursor-pointer rounded"
+            onClick={logout}
           />
-        </Link>
+        {/* </Link> */}
       </div>
     </header>
   );

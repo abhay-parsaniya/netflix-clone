@@ -1,0 +1,33 @@
+/* Here we are using tailwind css  */
+
+@tailwind components;
+
+@layer components {
+  .Banner__Container {
+    @apply flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12;
+  }
+
+  .Banner__Container__Image {
+    @apply absolute top-0 left-0 -z-10 h-[95vh] w-screen;
+  }
+
+  .Banner__Container__Title {
+    @apply text-2xl md:text-4xl lg:text-7xl font-bold;
+  }
+
+  .Banner__Container__Overview {
+    @apply max-w-xs text-xs text-shadow-md md:max-w-lg md:text-lg lg:max-w-2xl lg:text-2xl;
+  }
+
+  .Banner__Container__Button {
+    @apply flex items-center gap-x-2 rounded px-5 py-1.5 text-sm font-semibold transition hover:opacity-75 md:py-2.5 md:px-8 md:text-xl;
+  }
+
+  .Banner__Container__Button__PlayIcon {
+    @apply h-4 w-4 text-black md:h-7 md:w-7;
+  }
+
+  .Banner__Container__Button__MoreInfoIcon {
+    @apply h-5 w-5 md:h-8 md:w-8;
+  }
+}

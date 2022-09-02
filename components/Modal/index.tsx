@@ -12,6 +12,7 @@ import {
 import ReactPlayer from "react-player/lazy";
 import { Element, Genre, Movie } from "../../typings";
 import { FaPlay } from "react-icons/fa";
+import Button from "../Button";
 
 const Modal = () => {
   const [showModal, setShowModal] = useRecoilState(modalState);
@@ -50,24 +51,20 @@ const Modal = () => {
 
   const handleClose = () => {
     setShowModal(false);
-    setMovie(null)
+    setMovie(null);
   };
 
   return (
-    <MuiModal
-      open={showModal}
-      onClose={handleClose}
-      className="fixed !top-7 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide"
-    >
+    <MuiModal open={showModal} onClose={handleClose} className="Modal">
       <>
-        <button
+        <Button
           onClick={handleClose}
-          className="modalButton absolute right-5 top-5 !z-40 h-9 w-9 border-none bg-[#181818] hover:bg-[#181818]"
+          className="Modal__Button Modal__Button__Close"
         >
           <XIcon className="h-6 w-6" />
-        </button>
+        </Button>
 
-        <div className="relative pt-[56.25%]">
+        <div className="Modal__Player">
           <ReactPlayer
             url={`https://www.youtube.com/watch?v=${trailer}`}
             width="100%"
@@ -76,56 +73,60 @@ const Modal = () => {
             playing
             muted={muted}
           />
-          <div className="absolute bottom-10 flex w-full items-center justify-between px-10">
-            <div className="flex space-x-2">
-              <button className="flex items-center gap-x-2 rounded bg-white px-8 text-xl font-bold text-black transition hover:bg-[#e6e6e6]">
+          <div className="Modal__Player__Menu">
+            <div className="Modal__Player__Menu__Options">
+              <Button className="Modal__Player__Button__Play">
                 <FaPlay className="h-7 w-7 text-black" /> Play
-              </button>
-              <button className="modalButton">
+              </Button>
+              <Button className="Modal__Button">
                 <PlusIcon className="h-7 w-7" />
-              </button>
-              <button className="modalButton">
+              </Button>
+              <Button className="Modal__Button">
                 <ThumbUpIcon className="h-7 w-7" />
-              </button>
+              </Button>
             </div>
-            <button className="modalButton" onClick={() => setMuted(!muted)}>
+            <Button className="Modal__Button" onClick={() => setMuted(!muted)}>
               {muted ? (
                 <VolumeOffIcon className="h-6 w-6" />
               ) : (
                 <VolumeUpIcon className="h-6 w-6" />
               )}
-            </button>
+            </Button>
           </div>
         </div>
 
-        <div className="flex space-x-16 rounded-b-md bg-[#181818] px-10 py-8">
+        <div className="Modal__Movie">
           <div className="space-y-6 text-lg">
-            <div className="flex items-center space-x-2 text-sm">
-              <p className="font-semibold text-green-400">
+            <div className="Modal__Movie__Info">
+              <p className="Modal__Movie__Info__Vote_Average">
                 {movie!.vote_average * 10}% Match
               </p>
               <p className="font-light">
                 {movie?.release_date || movie?.first_air_date}
               </p>
-              <div className="flex h-4 items-center justify-center rounded border border-white/40 px-1.5 text-xs">
-                HD
-              </div>
+              <div className="Modal__Movie__Info__Type">HD</div>
             </div>
-            <div className="flex flex-col gap-x-10 gap-y-4 font-light md:flex-row">
+            <div className="Modal__Movie__About">
               <p className="w-5/6">{movie?.overview}</p>
-              <div className="flex flex-col space-y-3 text-sm">
+              <div className="Modal__Movie__About__Type">
                 <div>
-                  <span className="text-[gray]">Genres:</span>{" "}
+                  <span className="Modal__Movie__About__Type__Color">
+                    Genres:
+                  </span>{" "}
                   {genres.map((genre) => genre.name).join(", ")}
                 </div>
 
                 <div>
-                  <span className="text-[gray]">Original language:</span>{" "}
+                  <span className="Modal__Movie__About__Type__Color">
+                    Original language:
+                  </span>{" "}
                   {movie?.original_language}
                 </div>
 
                 <div>
-                  <span className="text-[gray]">Total votes:</span>{" "}
+                  <span className="Modal__Movie__About__Type__Color">
+                    Total votes:
+                  </span>{" "}
                   {movie?.vote_count}
                 </div>
               </div>

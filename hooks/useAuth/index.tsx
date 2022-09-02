@@ -32,7 +32,7 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
@@ -44,11 +44,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         if (user) {
           // Logged in...
           setUser(user);
-          setisLoading(false);
+          setIsLoading(false);
+          router.push("/");
         } else {
           // Not logged in...
           setUser(null);
-          setisLoading(true);
+          setIsLoading(true);
           router.push("/login");
         }
 
@@ -58,7 +59,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   );
 
   const signUp = async (email: string, password: string) => {
-    setisLoading(true);
+    setIsLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -67,16 +68,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       );
       setUser(userCredential.user);
       router.push("/");
-      setisLoading(false);
+      setIsLoading(false);
     } catch (error: any) {
       alert(error.message);
     } finally {
-      setisLoading(false);
+      setIsLoading(false);
     }
   };
 
   const signIn = async (email: string, password: string) => {
-    setisLoading(true);
+    setIsLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -85,16 +86,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       );
       setUser(userCredential.user);
       router.push("/");
-      setisLoading(false);
+      setIsLoading(false);
     } catch (error: any) {
       alert(error.message);
     } finally {
-      setisLoading(false);
+      setIsLoading(false);
     }
   };
 
   const logout = async () => {
-    setisLoading(true);
+    setIsLoading(true);
     signOut(auth)
       .then(() => {
         setUser(null);
@@ -102,7 +103,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       .catch((error) => {
         alert(error.message);
       })
-      .finally(() => setisLoading(false));
+      .finally(() => setIsLoading(false));
   };
 
   const memoizedValue = useMemo(

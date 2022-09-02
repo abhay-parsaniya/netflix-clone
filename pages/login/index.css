@@ -1,0 +1,31 @@
+@tailwind components;
+
+@layer components {
+  .Login {
+    @apply relative flex h-screen w-screen flex-col bg-black md:items-center md:justify-center md:bg-transparent;
+  }
+
+  .Login__BG__Image {
+    @apply -z-10 !hidden opacity-60 sm:!inline;
+  }
+
+  .Login__Netflix__Logo {
+    @apply absolute left-4 top-4 cursor-pointer object-contain md:left-10 md:top-6;
+  }
+
+  .Login__Form {
+    @apply relative mt-24 space-y-8 rounded bg-black/75 py-10 px-6 md:mt-0 md:max-w-md md:px-14;
+  }
+
+  .Login__Form__Validation {
+    @apply p-1 text-[13px] font-light  text-orange-500;
+  }
+
+  .Login__Form__Button__SignIn {
+    @apply w-full rounded !bg-[#E50914] py-3 font-semibold;
+  }
+
+  .Login__Form__Button__SignUp {
+    @apply cursor-pointer text-white hover:underline;
+  }
+}
