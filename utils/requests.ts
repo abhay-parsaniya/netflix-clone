@@ -1,5 +1,5 @@
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY
-const BASE_URL = 'https://api.themoviedb.org/3'
+export const BASE_URL = 'https://api.themoviedb.org/3'
 
 const requests = {
   fetchTrending: `${BASE_URL}/trending/all/week?api_key=${API_KEY}&language=en-US`,
@@ -10,6 +10,8 @@ const requests = {
   fetchHorrorMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=27`,
   fetchRomanceMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=10749`,
   fetchDocumentaries: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=99`,
+  fetchProducts: `https://netflix-clone-ffda2-default-rtdb.firebaseio.com/products.json`,
+  fetchUserProducts: `https://netflix-clone-ffda2-default-rtdb.firebaseio.com/user.json`
 }
 
 export default requests

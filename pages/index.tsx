@@ -6,8 +6,9 @@ import useAuth from "../hooks/useAuth";
 import { Movie } from "../typings";
 import requests from "../utils/requests";
 import { useRecoilValue } from "recoil";
-import { modalState } from "../atoms/modalAtom";
+import { modalState, movieListState, movieState } from "../atoms/modalAtom";
 import Modal from "../components/Modal";
+import Plans from "../components/Plans";
 
 interface Props {
   netflixOriginals: Movie[];
@@ -18,6 +19,7 @@ interface Props {
   horrorMovies: Movie[];
   romanceMovies: Movie[];
   documentaries: Movie[];
+  products: [] | null;
 }
 
 const Home = ({
@@ -29,11 +31,16 @@ const Home = ({
   romanceMovies,
   topRated,
   trendingNow,
+  products
 }: Props) => {
-  const { isLoading } = useAuth();
+  const { isLoading, user } = useAuth();
   const showModal = useRecoilValue(modalState);
+  const movie_ListState = useRecoilValue(movieListState)
+  const subscription = false;
 
-  if (isLoading) return null;
+  if (isLoading || subscription === null) return null;
+
+  // if (!subscription) return <Plans products={products} />;
 
   return (
     <div className="relative h-screen bg-gradient-to-b from-gray-900/10 to-[#010511] lg:h-[140vh]">
@@ -50,6 +57,7 @@ const Home = ({
           <Row title="Top Rated" movies={topRated} />
           <Row title="Action Thrillers" movies={actionMovies} />
           {/* My List */}
+          {movie_ListState.length > 0 && <Row title="My List" movies={movie_ListState} />}
           <Row title="Comedies" movies={comedyMovies} />
           <Row title="Scary Movies" movies={horrorMovies} />
           <Row title="Romance Movies" movies={romanceMovies} />
@@ -64,6 +72,20 @@ const Home = ({
 export default Home;
 
 export const getServerSideProps = async () => {
+  let products = await fetch(requests.fetchProducts, {
+    headers: {
+      "Content-Type": "application/json",
+      method: 'GET',
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => console.log(err));
+
+    products = Object.entries(products).map(entry => {
+      return {[entry[0]]: entry[1]};
+    });
+
   const [
     netflixOriginals,
     trendingNow,
@@ -94,6 +116,7 @@ export const getServerSideProps = async () => {
       horrorMovies: horrorMovies.results,
       romanceMovies: romanceMovies.results,
       documentaries: documentaries.results,
+      products
     },
   };
 };

@@ -1,0 +1,41 @@
+/* Here we are using tailwind css  */
+
+@tailwind components;
+
+@layer components {
+  .Plans__Header {
+    @apply border-b border-white/10 bg-[#141414];
+  }
+
+  .Button__SignOut {
+    @apply text-lg font-medium hover:underline;
+  }
+
+  .Plans__Container {
+    @apply mx-auto max-w-5xl px-5 pt-28 pb-12 transition-all md:px-10;
+  }
+
+  .Plans__Heading {
+    @apply mb-3 text-3xl font-medium;
+  }
+
+  .Plans__List {
+    @apply flex items-center gap-x-2 text-lg;
+  }
+
+  .Plans__CheckIcon {
+    @apply h-7 w-7 text-[#E50914];
+  }
+
+  .Plans {
+    @apply mt-4 flex flex-col space-y-4;
+  }
+
+  .Plans__Info {
+    @apply flex w-full items-center justify-end self-end md:w-3/5;
+  }
+
+  .Plans__Box {
+    @apply relative mx-1.5 flex h-20 w-[calc(100%/3)] cursor-default items-center justify-center rounded-sm bg-[#e50914] font-semibold shadow after:absolute after:top-full after:left-1/2 after:block after:-translate-x-1/2 after:border-8 after:border-b-0 after:border-transparent after:border-t-[#e50914] after:content-[""] md:h-32 lg:mx-8;
+  }
+}

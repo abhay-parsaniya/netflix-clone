@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import MuiModal from "@mui/material/Modal";
 import { useRecoilState } from "recoil";
-import { modalState, movieState } from "../../atoms/modalAtom";
+import { modalState, movieListState, movieState } from "../../atoms/modalAtom";
 import {
+  CheckIcon,
   PlusIcon,
   ThumbUpIcon,
   VolumeOffIcon,
@@ -13,6 +14,8 @@ import ReactPlayer from "react-player/lazy";
 import { Element, Genre, Movie } from "../../typings";
 import { FaPlay } from "react-icons/fa";
 import Button from "../Button";
+import { BASE_URL } from "../../utils/requests";
+import { DocumentData } from "firebase/firestore";
 
 const Modal = () => {
   const [showModal, setShowModal] = useRecoilState(modalState);
@@ -20,15 +23,19 @@ const Modal = () => {
   const [trailer, setTrailer] = useState("");
   const [genres, setGenres] = useState<Genre[]>([]);
   const [muted, setMuted] = useState(false);
+  const [addedToList, setAddedToList] = useState(false);
+  const [movies_list, setMoviesList] = useRecoilState<DocumentData[] | Movie[]>(
+    movieListState
+  );
 
   useEffect(() => {
     if (!movie) return;
 
     async function fetchMovie() {
       const data = await fetch(
-        `https://api.themoviedb.org/3/${
-          movie?.media_type === "tv" ? "tv" : "movie"
-        }/${movie?.id}?api_key=${
+        `${BASE_URL}/${movie?.media_type === "tv" ? "tv" : "movie"}/${
+          movie?.id
+        }?api_key=${
           process.env.NEXT_PUBLIC_API_KEY
         }&language=en-US&append_to_response=videos`
       )
@@ -49,9 +56,28 @@ const Modal = () => {
     fetchMovie();
   }, [movie]);
 
+  useEffect(
+    () =>
+      setAddedToList(
+        movies_list.findIndex((result) => result.id === movie?.id) !== -1
+      ),
+    [movies_list]
+  );
+
   const handleClose = () => {
     setShowModal(false);
     setMovie(null);
+  };
+
+  const handleList = (movie: Movie | DocumentData | null) => {
+    if (addedToList) {
+      const filtered_movies_list = movies_list.filter(
+        (movie_item) => movie_item.id !== movie?.id
+      );
+      setMoviesList(filtered_movies_list);
+    } else {
+      setMoviesList(() => [movie!, ...movies_list]);
+    }
   };
 
   return (
@@ -78,8 +104,15 @@ const Modal = () => {
               <Button className="Modal__Player__Button__Play">
                 <FaPlay className="h-7 w-7 text-black" /> Play
               </Button>
-              <Button className="Modal__Button">
-                <PlusIcon className="h-7 w-7" />
+              <Button
+                className="Modal__Button"
+                onClick={() => handleList(movie)}
+              >
+                {addedToList ? (
+                  <CheckIcon className="h-7 w-7" />
+                ) : (
+                  <PlusIcon className="h-7 w-7" />
+                )}
               </Button>
               <Button className="Modal__Button">
                 <ThumbUpIcon className="h-7 w-7" />
