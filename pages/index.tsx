@@ -8,7 +8,6 @@ import requests from "../utils/requests";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { modalState, movieListState, movieState } from "../atoms/modalAtom";
 import Modal from "../components/Modal";
-import Plans from "../components/Plans";
 import HeadName from "../components/HeadName";
 
 interface Props {
@@ -42,11 +41,6 @@ const Home = ({
     const fetch_Movie_List = localStorage.getItem("My_Movie_List");
     setMoviesList(JSON.parse(fetch_Movie_List!))
   }, [])
-
-  //Plans and Table Component and movie page is in progress right now
-
-  // if (isLoading || subscription === null) return null;
-  // if (!subscription) return <Plans products={products} />;
 
   return (
     <div className="relative h-screen bg-gradient-to-b from-gray-900/10 to-[#010511] lg:h-[140vh]">

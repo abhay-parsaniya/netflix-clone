@@ -41,7 +41,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(
     () =>
       onAuthStateChanged(auth, (user) => {
-        console.log(router.pathname);
         if (router.pathname !== "/") {
           if (user) {
             // Logged in...

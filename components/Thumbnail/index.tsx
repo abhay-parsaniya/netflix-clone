@@ -3,7 +3,6 @@ import Image from "next/image";
 import { Movie } from "../../typings";
 import { useRecoilState } from "recoil";
 import { modalState, movieState } from "../../atoms/modalAtom";
-import Link from "next/link";
 import { DocumentData } from "firebase/firestore";
 
 interface Props {
@@ -14,9 +13,6 @@ const Thumbnail = ({ movie }: Props) => {
   const [, setCurrentMovie] = useRecoilState(movieState);
   const [, setShowModal] = useRecoilState(modalState);
   return (
-    // <Link
-    //   href={`/movie`}
-    // >
       <div
         className="Thumbnail"
         onClick={() => {
@@ -32,7 +28,6 @@ const Thumbnail = ({ movie }: Props) => {
           layout="fill"
         />
       </div>
-    // </Link>
   );
 };
 
