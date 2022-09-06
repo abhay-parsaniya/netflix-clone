@@ -1,27 +1,32 @@
-import Button from '@mui/material/Button'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import { useState } from 'react'
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { Menu__List } from "../../constants/menu";
 
 export default function BasicMenu() {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const router = useRouter();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
+    setAnchorEl(event.currentTarget);
+  };
 
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
+  const handleClose = (menu_path: string) => {
+    router.push(menu_path);
+    setAnchorEl(null);
+  };
 
   return (
     <div className="md:!hidden">
       <Button
         id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
+        aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
+        aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
         className="!capitalize !text-white"
       >
@@ -34,15 +39,15 @@ export default function BasicMenu() {
         onClose={handleClose}
         className="menu"
         MenuListProps={{
-          'aria-labelledby': 'basic-button',
+          "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>Home</MenuItem>
-        <MenuItem onClick={handleClose}>TV Shows</MenuItem>
-        <MenuItem onClick={handleClose}>Movies</MenuItem>
-        <MenuItem onClick={handleClose}>New & Popular</MenuItem>
-        <MenuItem onClick={handleClose}>My List</MenuItem>
+        {Menu__List.map((menu) => (
+          <MenuItem key={menu.menu_title} onClick={() => handleClose(menu.path)}>
+            {menu.menu_title}
+          </MenuItem>
+        ))}
       </Menu>
     </div>
-  )
+  );
 }

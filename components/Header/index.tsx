@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import { BellIcon, SearchIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import BasicMenu from "../BasicMenu";
+import LogoImage from "../LogoImage";
+import MenuList from "../MenuList";
+import { Menu__List } from "../../constants/menu";
+import useAuth from "../../hooks/useAuth";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { logout, user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,21 +28,17 @@ const Header = () => {
   return (
     <header className={Header__Background}>
       <div className="Header__Menu">
-        <img
-          src="https://rb.gy/ulxxee"
-          width={100}
-          height={100}
-          className="cursor-pointer object-contain"
-        />
+        <LogoImage width={100} height={100} />
         <BasicMenu />
         <ul className="hidden space-x-4 md:flex">
-          <li className="Header__Menu__Link Header__Home__Link">
-            Home
-          </li>
-          <li className="Header__Menu__Link">TV Shows</li>
-          <Link href='/movies'><li className="Header__Menu__Link">Movies</li></Link>
-          <Link href='/new&popular'><li className="Header__Menu__Link">New & Popular</li></Link>
-          <Link href='/mylist'><li className="Header__Menu__Link">My List</li></Link>
+          {Menu__List.map((menu) => (
+            <MenuList
+              key={menu.menu_title}
+              path={menu.path}
+              className={menu.className}
+              menu_title={menu.menu_title}
+            />
+          ))}
         </ul>
       </div>
       <div className="Header__Menu__Options">
@@ -51,6 +52,11 @@ const Header = () => {
             className="cursor-pointer rounded"
           />
         </Link>
+        {user && (
+          <p onClick={logout} className="Header__SignOut">
+            Sign Out
+          </p>
+        )}
       </div>
     </header>
   );

@@ -14,8 +14,8 @@ interface Props {
 
 const Banner = ({ netflixOriginals }: Props) => {
   const [movie, setMovie] = useState<Movie | null>(null);
-  const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
-  const [showModal, setShowModal] = useRecoilState(modalState);
+  const [, setCurrentMovie] = useRecoilState(movieState);
+  const [, setShowModal] = useRecoilState(modalState);
 
   const randomSelectedMovie =
     netflixOriginals[Math.floor(Math.random() * netflixOriginals.length)];
@@ -39,9 +39,6 @@ const Banner = ({ netflixOriginals }: Props) => {
       <p className="Banner__Container__Overview">{movie?.overview}</p>
 
       <div className="flex space-x-3">
-        {/* <button className="Banner__Container__Button bg-white text-black">
-          <FaPlay className="Banner__Container__Button__PlayIcon" /> Play
-        </button> */}
         <Button className="Banner__Container__Button bg-white text-black">
           <FaPlay className="Banner__Container__Button__PlayIcon" /> Play
         </Button>

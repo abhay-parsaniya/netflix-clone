@@ -1,14 +1,15 @@
-import Head from "next/head";
 import Banner from "../components/Banner";
+import {useEffect} from"react"
 import Header from "../components/Header";
 import Row from "../components/Row";
 import useAuth from "../hooks/useAuth";
 import { Movie } from "../typings";
 import requests from "../utils/requests";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { modalState, movieListState, movieState } from "../atoms/modalAtom";
 import Modal from "../components/Modal";
 import Plans from "../components/Plans";
+import HeadName from "../components/HeadName";
 
 interface Props {
   netflixOriginals: Movie[];
@@ -31,23 +32,25 @@ const Home = ({
   romanceMovies,
   topRated,
   trendingNow,
-  products
+  products,
 }: Props) => {
-  const { isLoading, user } = useAuth();
+  const { user } = useAuth();
   const showModal = useRecoilValue(modalState);
-  const movie_ListState = useRecoilValue(movieListState)
-  const subscription = false;
+  const [movie_ListState, setMoviesList] = useRecoilState(movieListState);
 
-  if (isLoading || subscription === null) return null;
+  useEffect(() => {
+    const fetch_Movie_List = localStorage.getItem("My_Movie_List");
+    setMoviesList(JSON.parse(fetch_Movie_List!))
+  }, [])
 
+  //Plans and Table Component and movie page is in progress right now
+
+  // if (isLoading || subscription === null) return null;
   // if (!subscription) return <Plans products={products} />;
 
   return (
     <div className="relative h-screen bg-gradient-to-b from-gray-900/10 to-[#010511] lg:h-[140vh]">
-      <Head>
-        <title>Netflix</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <HeadName name="Netflix" />
 
       <Header />
       <main className="relative pl-4 pb-24 lg:space-y-24 lg:pl-16">
@@ -57,7 +60,9 @@ const Home = ({
           <Row title="Top Rated" movies={topRated} />
           <Row title="Action Thrillers" movies={actionMovies} />
           {/* My List */}
-          {movie_ListState.length > 0 && <Row title="My List" movies={movie_ListState} />}
+          {user && movie_ListState.length > 0 && (
+            <Row title="My List" movies={movie_ListState} />
+          )}
           <Row title="Comedies" movies={comedyMovies} />
           <Row title="Scary Movies" movies={horrorMovies} />
           <Row title="Romance Movies" movies={romanceMovies} />
@@ -75,16 +80,16 @@ export const getServerSideProps = async () => {
   let products = await fetch(requests.fetchProducts, {
     headers: {
       "Content-Type": "application/json",
-      method: 'GET',
+      method: "GET",
     },
   })
     .then((res) => res.json())
     .then((data) => data)
     .catch((err) => console.log(err));
 
-    products = Object.entries(products).map(entry => {
-      return {[entry[0]]: entry[1]};
-    });
+  products = Object.entries(products).map((entry) => {
+    return { [entry[0]]: entry[1] };
+  });
 
   const [
     netflixOriginals,
@@ -116,7 +121,7 @@ export const getServerSideProps = async () => {
       horrorMovies: horrorMovies.results,
       romanceMovies: romanceMovies.results,
       documentaries: documentaries.results,
-      products
+      products,
     },
   };
 };

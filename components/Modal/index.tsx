@@ -56,13 +56,12 @@ const Modal = () => {
     fetchMovie();
   }, [movie]);
 
-  useEffect(
-    () =>
-      setAddedToList(
-        movies_list.findIndex((result) => result.id === movie?.id) !== -1
-      ),
-    [movies_list]
-  );
+  useEffect(() => {
+    setAddedToList(
+      movies_list.findIndex((result) => result.id === movie?.id) !== -1
+    );
+    localStorage.setItem("My_Movie_List", JSON.stringify(movies_list));
+  }, [movies_list]);
 
   const handleClose = () => {
     setShowModal(false);
@@ -75,8 +74,10 @@ const Modal = () => {
         (movie_item) => movie_item.id !== movie?.id
       );
       setMoviesList(filtered_movies_list);
+      
     } else {
       setMoviesList(() => [movie!, ...movies_list]);
+      
     }
   };
 

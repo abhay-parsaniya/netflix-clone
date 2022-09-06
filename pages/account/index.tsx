@@ -1,6 +1,7 @@
-import Head from "next/head";
 import Link from "next/link";
 import React from "react";
+import HeadName from "../../components/HeadName";
+import LogoImage from "../../components/LogoImage";
 import useAuth from "../../hooks/useAuth";
 import requests from "../../utils/requests";
 
@@ -25,19 +26,11 @@ const Account = ({ user_products }: Props) => {
 
   return (
     <div>
-      <Head>
-        <title>Account Settings - Netflix</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <HeadName name="Account Settings - Netflix" />
 
       <header className={`bg-[#141414]`}>
         <Link href="/">
-          <img
-            src="https://rb.gy/ulxxee"
-            width={120}
-            height={120}
-            className="cursor-pointer object-contain"
-          />
+          <LogoImage width={120} height={120} />
         </Link>
         <Link href="/account">
           <img
@@ -48,53 +41,47 @@ const Account = ({ user_products }: Props) => {
         </Link>
       </header>
 
-      <main className="mx-auto max-w-6xl px-5 pt-24 pb-12 transition-all md:px-10">
-        <div className="flex flex-col gap-x-4 md:flex-row md:items-center">
-          <h1 className="text-3xl md:text-4xl">Account</h1>
-          <div className="-ml-0.5 flex items-center gap-x-1.5">
+      <main className="Account">
+        <div className="Account__Info">
+          <h1 className="Account__Info__Title">Account</h1>
+          <div className="Account__Info__Member">
             <img src="https://rb.gy/4vfk4r" alt="" className="h-7 w-7" />
-            <p className="text-xs font-semibold text-[#555]">
+            <p className="Account__Info__MembershipDate">
               Member since {subscription_date}
             </p>
           </div>
         </div>
 
         <div className="col-span-3">
-          <div className="flex flex-col justify-between border-b border-white/10 py-4 md:flex-row">
+          <div className="Account__Profile">
             <div>
               <p className="font-medium">{user_products?.email}</p>
               <p className="text-[gray]">Password: ********</p>
             </div>
             <div className="md:text-right">
-              <p className="membershipLink">Change email</p>
-              <p className="membershipLink">Change password</p>
+              <p className="Account__Profile__MembershipLink">Change email</p>
+              <p className="Account__Profile__MembershipLink">Change password</p>
             </div>
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:border-x-0 md:border-t md:border-b-0 md:px-0 md:pb-0">
-          <h4 className="text-lg text-[gray]">Plan Details</h4>
+        <div className="Account__Plan">
+          <h4 className="Account__Plan__Heading">Plan Details</h4>
           {/* Find the current plan */}
-          <div className="col-span-2 font-medium">
-            {/* {
-              products.filter(
-                (product) => product.id === subscription?.product
-              )[0]?.name
-            } */}
+          <div className="Account__Plan__Detail">
             {user_products.plan}
           </div>
           <p
-            className="cursor-pointer text-blue-500 hover:underline md:text-right"
-            // onClick={goToBillingPortal}
+            className="Account__Plan__ChangeLink"
           >
             Change plan
           </p>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:border-x-0 md:border-t md:border-b-0 md:px-0">
-          <h4 className="text-lg text-[gray]">Settings</h4>
+        <div className="Account__Settings">
+          <h4 className="Account__Settings__Heading">Settings</h4>
           <p
-            className="col-span-3 cursor-pointer text-blue-500 hover:underline"
+            className="Account_Settings__SignOut"
             onClick={logout}
           >
             Sign out of all devices

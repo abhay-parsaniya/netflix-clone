@@ -4,7 +4,6 @@ import { Movie } from "../../typings";
 import { useRecoilState } from "recoil";
 import { modalState, movieState } from "../../atoms/modalAtom";
 import Link from "next/link";
-import { BASE_URL } from "../../utils/requests";
 import { DocumentData } from "firebase/firestore";
 
 interface Props {
@@ -12,8 +11,8 @@ interface Props {
 }
 
 const Thumbnail = ({ movie }: Props) => {
-  const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
-  const [showModal, setShowModal] = useRecoilState(modalState);
+  const [, setCurrentMovie] = useRecoilState(movieState);
+  const [, setShowModal] = useRecoilState(modalState);
   return (
     // <Link
     //   href={`/movie`}

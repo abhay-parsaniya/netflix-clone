@@ -38,7 +38,7 @@ const Row = ({ title, movies }: Props) => {
         />
 
         <div ref={rowRef} className="Row__Group__Data__Display">
-          {movies.map((movie) => (
+          {movies.map((movie: Movie) => (
             <Thumbnail key={movie.id} movie={movie} />
           ))}
         </div>

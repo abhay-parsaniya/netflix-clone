@@ -1,0 +1,59 @@
+@tailwind components;
+
+@layer components {
+  .Account {
+    @apply mx-auto max-w-6xl px-5 pt-24 pb-12 transition-all md:px-10;
+  }
+
+  .Account__Info {
+    @apply flex flex-col gap-x-4 md:flex-row md:items-center;
+  }
+
+  .Account__Info__Title {
+    @apply text-3xl md:text-4xl;
+  }
+
+  .Account__Info__Member {
+    @apply -ml-0.5 flex items-center gap-x-1.5;
+  }
+
+  .Account__Info__MembershipDate {
+    @apply text-xs font-semibold text-[#555];
+  }
+
+  .Account__Profile {
+    @apply flex flex-col justify-between border-b border-white/10 py-4 md:flex-row;
+  }
+
+  .Account__Profile__MembershipLink {
+    @apply cursor-pointer text-blue-500 hover:underline;
+  }
+
+  .Account__Plan {
+    @apply mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:border-x-0 md:border-t md:border-b-0 md:px-0 md:pb-0;
+  }
+
+  .Account__Plan__Heading {
+    @apply text-lg text-[gray];
+  }
+
+  .Account__Plan__Detail {
+    @apply col-span-2 font-medium;
+  }
+
+  .Account__Plan__ChangeLink {
+    @apply cursor-pointer text-blue-500 hover:underline md:text-right;
+  }
+
+  .Account__Settings {
+    @apply mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:border-x-0 md:border-t md:border-b-0 md:px-0;
+  }
+
+  .Account__Settings__Heading {
+    @apply text-lg text-[gray];
+  }
+
+  .Account_Settings__SignOut {
+    @apply col-span-3 cursor-pointer text-blue-500 hover:underline;
+  }
+}

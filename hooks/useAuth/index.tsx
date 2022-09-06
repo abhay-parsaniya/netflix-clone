@@ -41,21 +41,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(
     () =>
       onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // Logged in...
-          setUser(user);
-          setIsLoading(false);
-          router.push("/");
-        } else {
-          // Not logged in...
-          setUser(null);
-          setIsLoading(true);
-          router.push("/login");
+        console.log(router.pathname);
+        if (router.pathname !== "/") {
+          if (user) {
+            // Logged in...
+            setUser(user);
+            setIsLoading(false);
+          } else {
+            // Not logged in...
+            setUser(null);
+            setIsLoading(true);
+            router.push("/login");
+          }
         }
 
         setInitialLoading(false);
       }),
-    [auth]
+    [auth, router.pathname]
   );
 
   const signUp = async (email: string, password: string) => {
@@ -71,6 +73,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsLoading(false);
     } catch (error: any) {
       alert(error.message);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -89,6 +92,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsLoading(false);
     } catch (error: any) {
       alert(error.message);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -99,9 +103,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     signOut(auth)
       .then(() => {
         setUser(null);
+        router.push("/");
       })
       .catch((error) => {
         alert(error.message);
+        setError(error);
       })
       .finally(() => setIsLoading(false));
   };

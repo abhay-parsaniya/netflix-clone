@@ -18,4 +18,8 @@
   .Header__Menu__Options{
     @apply flex items-center space-x-4 text-sm font-light
   }
+
+  .Header__SignOut{
+    @apply cursor-pointer hover:underline
+  }
 }

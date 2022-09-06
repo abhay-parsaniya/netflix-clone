@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import Head from "next/head";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import Button from "../../components/Button";
-// import "./isLoggedIn.css";
+import HeadName from "../../components/HeadName";
 
 interface Inputs {
   email: string;
@@ -30,10 +29,7 @@ const Login = () => {
 
   return (
     <div className="Login">
-      <Head>
-        <title>Netflix Login</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <HeadName name="Netflix - Login" />
 
       <Image
         src="https://rb.gy/p2hphi"
