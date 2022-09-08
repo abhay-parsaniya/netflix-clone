@@ -1,5 +1,5 @@
 import Banner from "../components/Banner";
-import {useEffect} from"react"
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Row from "../components/Row";
 import useAuth from "../hooks/useAuth";
@@ -9,6 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { modalState, movieListState, movieState } from "../atoms/modalAtom";
 import Modal from "../components/Modal";
 import HeadName from "../components/HeadName";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 interface Props {
   netflixOriginals: Movie[];
@@ -33,37 +34,44 @@ const Home = ({
   trendingNow,
   products,
 }: Props) => {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const showModal = useRecoilValue(modalState);
   const [movie_ListState, setMoviesList] = useRecoilState(movieListState);
+  // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetch_Movie_List = localStorage.getItem("My_Movie_List");
-    setMoviesList(JSON.parse(fetch_Movie_List!))
-  }, [])
+    setMoviesList(JSON.parse(fetch_Movie_List!));
+  }, []);
 
   return (
     <div className="relative h-screen bg-gradient-to-b from-gray-900/10 to-[#010511] lg:h-[140vh]">
       <HeadName name="Netflix" />
 
-      <Header />
-      <main className="relative pl-4 pb-24 lg:space-y-24 lg:pl-16">
-        <Banner netflixOriginals={netflixOriginals} />
-        <section className="md:space-y-24">
-          <Row title="Trending Now" movies={trendingNow} />
-          <Row title="Top Rated" movies={topRated} />
-          <Row title="Action Thrillers" movies={actionMovies} />
-          {/* My List */}
-          {user && movie_ListState.length > 0 && (
-            <Row title="My List" movies={movie_ListState} />
-          )}
-          <Row title="Comedies" movies={comedyMovies} />
-          <Row title="Scary Movies" movies={horrorMovies} />
-          <Row title="Romance Movies" movies={romanceMovies} />
-          <Row title="Documentaries" movies={documentaries} />
-        </section>
-      </main>
-      {showModal && <Modal />}
+      {isLoading && <LoadingSpinner size={40} color="error" />}
+
+      {!isLoading && (
+        <>
+          <Header />
+          <main className="relative pl-4 pb-24 lg:space-y-24 lg:pl-16">
+            <Banner netflixOriginals={netflixOriginals} />
+            <section className="md:space-y-24">
+              <Row title="Trending Now" movies={trendingNow} />
+              <Row title="Top Rated" movies={topRated} />
+              <Row title="Action Thrillers" movies={actionMovies} />
+              {/* My List */}
+              {user && movie_ListState.length > 0 && (
+                <Row title="My List" movies={movie_ListState} />
+              )}
+              <Row title="Comedies" movies={comedyMovies} />
+              <Row title="Scary Movies" movies={horrorMovies} />
+              <Row title="Romance Movies" movies={romanceMovies} />
+              <Row title="Documentaries" movies={documentaries} />
+            </section>
+          </main>
+          {showModal && <Modal />}
+        </>
+      )}
     </div>
   );
 };

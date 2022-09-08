@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, set } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import Button from "../../components/Button";
 import HeadName from "../../components/HeadName";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 interface Inputs {
   email: string;
@@ -11,6 +12,7 @@ interface Inputs {
 }
 const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { signIn, signUp } = useAuth();
 
   const {
@@ -21,9 +23,13 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     if (isLoggedIn) {
+      setIsLoading(true);
       await signIn(email, password);
+      setIsLoading(false);
     } else {
+      setIsLoading(true);
       await signUp(email, password);
+      setIsLoading(false);
     }
   };
 
@@ -81,7 +87,7 @@ const Login = () => {
           className="Login__Form__Button__SignIn"
           onClick={() => setIsLoggedIn(true)}
         >
-          Sign In
+          {isLoading ? <LoadingSpinner size={25} color="inherit" /> : "Sign In"}
         </Button>
 
         <div className="text-[gray]">

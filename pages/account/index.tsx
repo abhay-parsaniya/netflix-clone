@@ -52,6 +52,8 @@ const Account = ({ user_products }: Props) => {
           </div>
         </div>
 
+        {/* this all values are satic at the moment */}
+
         <div className="col-span-3">
           <div className="Account__Profile">
             <div>
